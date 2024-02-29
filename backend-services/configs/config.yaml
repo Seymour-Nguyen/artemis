@@ -3,12 +3,27 @@
 #
 # Start of Prefix Definitions
 prefixes:
-  forth_prefix_main: &forth_prefix_main
-  - 139.91.0.0/16
-  forth_prefix_lamda: &forth_prefix_lamda
-  - 139.91.250.0/24
-  forth_prefix_vod: &forth_prefix_vod
-  - 139.91.2.0/24
+  cmc_prefix_ipv4: &cmc_prefix_ipv4
+  - 119.82.128.0/20^24-24
+  - 124.158.0.0/20^24-24
+  - 144.48.24.0/22^24-24
+  - 183.91.0.0/19^24-24
+  - 202.134.16.0/21^24-24
+  - 203.171.16.0/20^24-24
+  - 203.205.0.0/18^24-24
+  - 45.122.232.0/22^24-24
+  - 45.122.236.0/22^24-24
+  - 45.122.240.0/22^24-24
+  - 45.122.244.0/22^24-24
+  - 45.122.248.0/22^24-24
+  - 45.122.252.0/22^24-24
+  - 42.96.32.0/19^24-24
+  vnnic_prefix_ipv4: &vnnic_prefix_ipv4
+  - 203.119.8.0/22^24-24
+  - 203.119.72.0/22^24-24
+  - 203.119.64.0/22^24-24
+  - 203.119.44.0/22^24-24
+  - 203.119.36.0/22^24-24
   # new v4 prefix observed, need to be verified with FORTH
   forth_prefix_v4_new: &forth_prefix_v4_new
   - 192.67.249.0/24
@@ -18,16 +33,18 @@ prefixes:
 # End of Prefix Definitions
 
 # Start of Monitor Definitions
-monitors: {}
-  #riperis: ['']
-  #bgpstreamlive:
-  #- routeviews
-  #- ris
-  #bgpstreamkafka:
-  #  host: bmp.bgpstream.caida.org
-  #  port: 9092
-  #  topic: '^openbmp\.router--.+\.peer-as--.+\.bmp_raw'
-  #bgpstreamhist: '/etc/artemis/'
+monitors:
+  riperis: [rrc00, rrc01, rrc02, rrc03, rrc04, rrc05, rrc06, rrc07, rrc10, rrc11,
+    rrc12, rrc13, rrc14, rrc15, rrc16, rrc18, rrc19, rrc20, rrc21, rrc22, rrc23, rrc24,
+    rrc25, rrc26]
+  bgpstreamlive:
+  - routeviews
+  - ris
+  bgpstreamkafka:
+    host: bmp.bgpstream.caida.org
+    port: 9092
+    topic: '^openbmp\.router--.+\.peer-as--.+\.bmp_raw'
+  bgpstreamhist: '/etc/artemis/'
 # End of Monitor Definitions
 
 autoignore:
@@ -36,48 +53,51 @@ autoignore:
     thres_num_ases_infected: 3
     interval: 3600
     prefixes:
-    - *forth_prefix_lamda
-    - *forth_prefix_vod
+    - *cmc_prefix_ipv4
+    - *vnnic_prefix_ipv4
 
 # Start of ASN Definitions
 asns:
-  forth_asn: &forth_asn
-  - 8522
-  grnet_forth_upstream: &grnet_forth_upstream
-  - 5408
-  lamda_forth_upstream_back: &lamda_forth_upstream_back
-  - 56910
-  vodafone_forth_upstream_back: &vodafone_forth_upstream_back
-  - 12361
+  cmc_asn: &cmc_asn
+  - 45903
+  - 38732
+  - 38733
+  vnnic_asn: &vnnic_asn
+  - 23902
+  - 131415
+  - 24066
+  viettel_asn: &viettel_asn
+  - 7552
+  - 24086
+  - 38731
+  vnpt_asn: &vnpt_asn
+  - 45899
+  - 7643
+  - 135905
+  tier_1_asn: &tier_1_asn
+  - 2914
 # End of ASN Definitions
 
 # Start of Rule Definitions
 rules:
 
 - prefixes:
-  - *forth_prefix_main
-  - *forth_prefix_v4_new
-  - *forth_prefix_v6_new
+  - *cmc_prefix_ipv4
   origin_asns:
-  - *forth_asn
+  - *cmc_asn
   neighbors:
-  - *grnet_forth_upstream
-  - *vodafone_forth_upstream_back
+  - *tier_1_asn
+  - *viettel_asn
+  - *vnpt_asn
   mitigation: manual
 
 - prefixes:
-  - *forth_prefix_lamda
+  - *vnnic_prefix_ipv4
   origin_asns:
-  - *forth_asn
+  - *vnnic_asn
   neighbors:
-  - *lamda_forth_upstream_back
+  - *viettel_asn
+  - *vnpt_asn
   mitigation: manual
 
-- prefixes:
-  - *forth_prefix_vod
-  origin_asns:
-  - *forth_asn
-  neighbors:
-  - *vodafone_forth_upstream_back
-  mitigation: manual
 # End of Rule Definitions
