@@ -26,7 +26,7 @@ setuptools.setup(
         "kombu==4.6.3",
         "ruamel.yaml==0.16.5",
         "ujson==1.35",
-        "PyYAML==5.4",
+        "PyYAML==6.0.1",
         "gql==0.4.0",
         "ipaddress==1.0.23",
         "psycopg2==2.8.4",
