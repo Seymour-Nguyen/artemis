@@ -3,40 +3,89 @@
 #
 # Start of Prefix Definitions
 prefixes:
-  cmc_prefix_ipv4: &cmc_prefix_ipv4
-  - 119.82.128.0/20^24-24
-  - 124.158.0.0/20^24-24
-  - 144.48.24.0/22^24-24
-  - 183.91.0.0/19^24-24
-  - 202.134.16.0/21^24-24
-  - 203.171.16.0/20^24-24
-  - 203.205.0.0/18^24-24
-  - 45.122.232.0/22^24-24
-  - 45.122.236.0/22^24-24
-  - 45.122.240.0/22^24-24
-  - 45.122.244.0/22^24-24
-  - 45.122.248.0/22^24-24
-  - 45.122.252.0/22^24-24
-  - 42.96.32.0/19^24-24
-  vnnic_prefix_ipv4: &vnnic_prefix_ipv4
-  - 203.119.8.0/22^24-24
-  - 203.119.72.0/22^24-24
-  - 203.119.64.0/22^24-24
-  - 203.119.44.0/22^24-24
-  - 203.119.36.0/22^24-24
-  # new v4 prefix observed, need to be verified with FORTH
-  forth_prefix_v4_new: &forth_prefix_v4_new
-  - 192.67.249.0/24
-  # new v6 prefix observed, need to be verified with FORTH
-  forth_prefix_v6_new: &forth_prefix_v6_new
-  - 2001:648:2c30::/48
+  cmc_prefix_v4: &cmc_prefix_v4
+  - 119.82.128.0/20^+
+  - 124.158.0.0/20^+
+  - 144.48.24.0/22^+
+  - 183.91.0.0/19^+
+  - 202.134.16.0/21^+
+  - 203.171.16.0/20^+
+  - 203.205.0.0/18^+
+  - 45.122.232.0/22^+
+  - 45.122.236.0/22^+
+  - 45.122.240.0/22^+
+  - 45.122.244.0/22^+
+  - 45.122.248.0/22^+
+  - 45.122.252.0/22^+
+  - 42.96.32.0/19^+
+  vnnic_prefix_v4: &vnnic_prefix_v4
+  - 203.119.8.0/22^+
+  - 203.119.72.0/22^+
+  - 203.119.64.0/22^+
+  - 203.119.44.0/22^+
+  - 203.119.36.0/22^+
+  fpt_prefix_v4: &fpt_prefix_v4
+  - 1.52.0.0/14^+
+  - 103.156.10.0/23^+
+  - 103.156.12.0/23^+
+  - 103.156.30.0/23^+
+  - 103.156.32.0/23^+
+  - 103.156.34.0/23^+
+  - 103.35.64.0/22^+
+  - 103.39.92.0/22^+
+  - 113.22.0.0/16^+
+  - 113.23.0.0/17^+
+  - 118.68.0.0/14^+
+  - 144.48.20.0/22^+
+  - 183.80.0.0/16^+
+  - 183.81.0.0/17^+
+  - 203.191.8.0/21^+
+  - 210.245.0.0/17^+
+  - 42.112.0.0/13^+
+  - 43.239.148.0/22^+
+  - 58.186.0.0/15^+
+  spt_prefix_v4: &spt_prefix_v4
+  - 180.93.0.0/16^+
+  - 116.118.0.0/17^+
+  - 221.121.0.0/18^+
+  - 221.133.0.0/19^+
+  - 103.200.60.0/22^+
+  - 203.196.24.0/22^+
+  viettel_prefix_v4: &viettel_prefix_v4
+  - 171.224.0.0/11^+
+  - 116.96.0.0/12^+
+  - 27.64.0.0/12^+
+  - 117.0.0.0/13^+
+  - 115.72.0.0/13^+
+  - 125.234.0.0/15^+
+  - 125.212.128.0/17^+
+  - 125.214.0.0/18^+
+  - 220.231.64.0/18^+
+  - 203.113.128.0/18^+
+  - 203.190.160.0/20^+
+  - 203.113.144.0/20^+
+  - 103.84.76.0/22^+
+  vnpt_prefix_v4: &vnpt_prefix_v4
+  - 203.160.0.0/23^+
+  - 203.162.0.0/21^+
+  - 203.162.8.0/21^+
+  - 203.162.16.0/20^+
+  - 203.162.128.0/20^+
+  - 203.162.160.0/19^+
+  - 203.162.144.0/20^+
+  - 203.162.192.0/18^+
+  - 203.210.192.0/18^+
+  - 221.132.0.0/18^+
+  - 222.252.0.0/14^+
+  - 123.16.0.0/12^+
+  - 113.160.0.0/11^+
+  - 14.160.0.0/11^+
+  - 14.224.0.0/11^+
 # End of Prefix Definitions
 
 # Start of Monitor Definitions
 monitors:
-  riperis: [rrc00, rrc01, rrc02, rrc03, rrc04, rrc05, rrc06, rrc07, rrc10, rrc11,
-    rrc12, rrc13, rrc14, rrc15, rrc16, rrc18, rrc19, rrc20, rrc21, rrc22, rrc23, rrc24,
-    rrc25, rrc26]
+  riperis: ['']
   bgpstreamlive:
   - routeviews
   - ris
@@ -49,17 +98,22 @@ monitors:
 
 autoignore:
   autoignore_non_important_prefixes:
-    thres_num_peers_seen: 2
-    thres_num_ases_infected: 3
-    interval: 3600
+    thres_num_peers_seen: 5
+    thres_num_ases_infected: 10
+    interval: 300
     prefixes:
-    - *cmc_prefix_ipv4
-    - *vnnic_prefix_ipv4
+    - *cmc_prefix_v4
+    - *vnnic_prefix_v4
+    - *fpt_prefix_v4
+    - *spt_prefix_v4
+    - *viettel_prefix_v4
+    - *vnpt_prefix_v4
 
 # Start of ASN Definitions
 asns:
   cmc_asn: &cmc_asn
   - 45903
+  cmc_idc_asn: &cmc_idc_asn
   - 38732
   - 38733
   vnnic_asn: &vnnic_asn
@@ -69,35 +123,34 @@ asns:
   viettel_asn: &viettel_asn
   - 7552
   - 24086
+  viettelidc_asn:
   - 38731
+  viettelTimorLeste_asn:
+  - 133606
   vnpt_asn: &vnpt_asn
   - 45899
   - 7643
+  vnptidc_asn:
   - 135905
-  tier_1_asn: &tier_1_asn
-  - 2914
+  fpt_asn: &fpt_asn
+  - 18403
+  spt_asn: &spt_asn
+  - 7602
 # End of ASN Definitions
 
 # Start of Rule Definitions
 rules:
-
 - prefixes:
-  - *cmc_prefix_ipv4
+  - *cmc_prefix_v4
   origin_asns:
   - *cmc_asn
-  neighbors:
-  - *tier_1_asn
-  - *viettel_asn
-  - *vnpt_asn
+  - *cmc_idc_asn
   mitigation: manual
 
 - prefixes:
-  - *vnnic_prefix_ipv4
+  - *vnnic_prefix_v4
   origin_asns:
   - *vnnic_asn
-  neighbors:
-  - *viettel_asn
-  - *vnpt_asn
   mitigation: manual
 
 # End of Rule Definitions
