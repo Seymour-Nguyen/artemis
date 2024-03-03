@@ -578,5 +578,17 @@ services:
         command:
             - graphql-engine
             - serve
+    routinator:
+        image: nlnetlabs/routinator:latest
+        container_name: routinator
+        restart: unless-stopped
+        networks:
+            - artemis
+        ports:
+            - 3323:3323
+            - 8323:8323
+            - 9556:9556
+        volumes:
+            - ./routinator:/home/routinator/.rpki-cache/tals
 networks:
     artemis: null
