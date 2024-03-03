@@ -582,7 +582,7 @@ services:
         image: nlnetlabs/routinator:latest
         container_name: routinator
         restart: unless-stopped
-       networks:
+        networks:
             - artemis
         ports:
             - 3323:3323
